@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>C Place</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>C Place</h1>
+  <canvas id="board" width="100" height="100"></canvas>
+  <br>
+
+  <div id="palette">
+    <button class="color-btn selected" style="background: #FF0000" data-color="#FF0000"></button>
+    <button class="color-btn" style="background: #00FF00" data-color="#00FF00"></button>
+    <button class="color-btn" style="background: #0000FF" data-color="#0000FF"></button>
+    <button class="color-btn" style="background: #FFFF00" data-color="#FFFF00"></button>
+    <button class="color-btn" style="background: #FF00FF" data-color="#FF00FF"></button>
+    <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
+    <button class="color-btn" style="background: #000000" data-color="#000000"></button>
+    <button class="color-btn" style="background: #FFFFFF" data-color="#FFFFFF"></button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
