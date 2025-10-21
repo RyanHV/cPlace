@@ -15,9 +15,57 @@ app.use(express.static("public"));
 
 const WIDTH = 100;
 const HEIGHT = 100;
+const fs = require('fs');
+const path = require('path');
+
+const pixelsFile = path.join(__dirname, 'pixels.json');
+
 let pixels = Array.from({ length: HEIGHT }, () =>
   Array.from({ length: WIDTH }, () => "#FFFFFF")
 );
+
+// Try to load existing pixels.json on startup
+try {
+  if (fs.existsSync(pixelsFile)) {
+    const raw = fs.readFileSync(pixelsFile, 'utf8');
+    const parsed = JSON.parse(raw);
+    // basic validation
+    if (Array.isArray(parsed) && parsed.length === HEIGHT) {
+      pixels = parsed;
+      console.log('Loaded pixels from', pixelsFile);
+    }
+  }
+} catch (err) {
+  console.error('Failed to load pixels.json:', err.message);
+}
+
+// Auto-save with debounce to avoid excessive writes
+let saveTimeout = null;
+function scheduleSave(delay = 1000) {
+  if (saveTimeout) clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    try {
+      fs.writeFileSync(pixelsFile, JSON.stringify(pixels));
+      // console.log('Pixels saved to', pixelsFile);
+    } catch (err) {
+      console.error('Failed to save pixels:', err.message);
+    }
+    saveTimeout = null;
+  }, delay);
+}
+
+// Ensure we flush on exit
+function flushAndExit() {
+  try {
+    fs.writeFileSync(pixelsFile, JSON.stringify(pixels));
+    console.log('Pixels flushed to', pixelsFile);
+  } catch (err) {
+    console.error('Failed to flush pixels on exit:', err.message);
+  }
+  process.exit();
+}
+process.on('SIGINT', flushAndExit);
+process.on('SIGTERM', flushAndExit);
 
 io.on("connection", (socket) => {
   // 1) IP direto via handshake (funciona na maioria dos casos)
@@ -42,6 +90,8 @@ io.on("connection", (socket) => {
     if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
       pixels[y][x] = color;
       io.emit("updatePixel", { x, y, color });
+      // schedule save to disk
+      scheduleSave();
     }
   });
 

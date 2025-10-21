@@ -1,7 +1,26 @@
+:root {
+  --palette-width: 250px;
+  --palette-padding: 12px;
+  --palette-gap: 4px; /* ← diminui o espaçamento entre os botões */
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* prevent scrolling */
+}
+
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-family: sans-serif;
   background: #1a1922;
+  /* leave space for left sidebar based on variable */
+  padding-left: calc(var(--palette-width) + 16px);
 }
 
 canvas {
@@ -9,34 +28,66 @@ canvas {
   border: 1px solid #000;
   cursor: crosshair;
   background: #fff;
+   /* Make canvas scale to fit viewport while preserving aspect ratio */
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 100px); /* leave space for palette/header */
+}
+
+#palette-holder {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: #d8d8d8;
+  position: fixed;
+  left: 1%;
+  top: 5%;
+  height: 90vh;
+  width: var(--palette-width);
+  padding: var(--palette-padding);
+  background: #2f2d3d;
+  border-radius: 10px;
+  box-shadow: 2px 0 20px #030303;
+  box-sizing: border-box;
+  display: block;
 }
 
 #palette {
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 5px;
-  background: #1a1922;
-  padding: 10px;
-  border-radius: 10px;
-   box-shadow: 0 0 20px #030303;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 4px;      /* vertical gap between rows (Y direction) */
+  column-gap: 8px;   /* horizontal gap between columns (X direction) */
+  align-items: start;
+  align-content: start; /* pack rows toward the top */
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .color-btn {
-  width: 30px;
-  height: 30px;
-  border: 2px solid #d8d8d8;
+  width: 100%;
+  /* make buttons roughly square based on available column width */
+  aspect-ratio: 1 / 1;
+  border: 2px solid #818181;
+  border-radius: 10px;
   cursor: pointer;
-  margin: 2px;
-  display: inline-block;
+  display: block;
+  transition: transform 0.3s ease-in-out;
+}
+
+.color-btn:hover{
+  transform: scale(1.1);
+  /*border: 3px solid #818181; */
 }
 
 h1{
+  color: #d8d8d8;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-weight: bold;
+}
+
+h2{
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
     color: #d8d8d8;
 }
 
 .color-btn.selected {
-  border: 2px solid #000000; /* Borda dourada na cor selecionada */
+  border: 2px solid #1f64e4; 
 }

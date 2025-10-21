@@ -2,40 +2,57 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>C Place</title>
+  <title>CPlace</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>C Place</h1>
-  <h1>selecione uma cor e coloque seu pixel</h1>
-  <h1>nao fiz banco de dados ainda, entao nao se dediquem mt, as artes vao ser perdidas</h1>
   <canvas id="board" width="500" height="500"></canvas>
   <br>
+  <div id="palette-holder">
+    <div id="palette">
+      <button class="color-btn selected" style="background: #000000" data-color="#000000"></button>
+      <button class="color-btn" style="background: #474747" data-color="#474747"></button>
+      <button class="color-btn" style="background: #cccccc" data-color="#cccccc"></button>
+      <button class="color-btn" style="background: #FFFFFF" data-color="#FFFFFF"></button>
+      <button class="color-btn" style="background: #810202" data-color="#810202"></button>
+      <button class="color-btn" style="background: #FF0000" data-color="#FF0000"></button>
+      <button class="color-btn" style="background: #ff5757" data-color="#f77171"></button>
+      <button class="color-btn" style="background: #5a3401" data-color="#5a3401"></button>
+      <button class="color-btn" style="background: #ff9100" data-color="#ff9100"></button>
+      <button class="color-btn" style="background: #ffe815" data-color="#ffe815"></button>
+      <button class="color-btn" style="background: #f3f38f" data-color="#f3f38f"></button>
+      <button class="color-btn" style="background: #16ac16" data-color="#16ac16"></button>
+      <button class="color-btn" style="background: #078307" data-color="#078307"></button>
+      <button class="color-btn" style="background: #05055c" data-color="#05055c"></button>
+      <button class="color-btn" style="background: #1742ff" data-color="#1742ff"></button>
+      <button class="color-btn" style="background: #4781ff" data-color="#4768ff"></button>
+      <button class="color-btn" style="background: #e661e6" data-color="#e661e6"></button>
+      <button class="color-btn" style="background: #e013e0" data-color="#e013e0"></button>
+      <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
+      <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
+      <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
+      <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
+      <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
+      <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
 
-  <div id="palette">
-    <button class="color-btn selected" style="background: #000000" data-color="#000000"></button>
-    <button class="color-btn" style="background: #474747" data-color="#474747"></button>
-    <button class="color-btn" style="background: #cccccc" data-color="#cccccc"></button>
-    <button class="color-btn" style="background: #FFFFFF" data-color="#FFFFFF"></button>
-    <button class="color-btn" style="background: #810202" data-color="#810202"></button>
-    <button class="color-btn" style="background: #FF0000" data-color="#FF0000"></button>
-    <button class="color-btn" style="background: #ff5757" data-color="#f77171"></button>
-    <button class="color-btn" style="background: #ff9100" data-color="#ff9100"></button>
-    <button class="color-btn" style="background: #ffe815" data-color="#ffe815"></button>
-    <button class="color-btn" style="background: #5a3401" data-color="#5a3401"></button>
-    <button class="color-btn" style="background: #f3f38f" data-color="#f3f38f"></button>
-    <button class="color-btn" style="background: #078307" data-color="#078307"></button>
-    <button class="color-btn" style="background: #0ddf0d" data-color="#0ddf0d"></button>
-    <button class="color-btn" style="background: #05055c" data-color="#05055c"></button>
-    <button class="color-btn" style="background: #1742ff" data-color="#1742ff"></button>
-    <button class="color-btn" style="background: #4781ff" data-color="#4768ff"></button>
-    <button class="color-btn" style="background: #e661e6" data-color="#e661e6"></button>
-    <button class="color-btn" style="background: #e013e0" data-color="#e013e0"></button>
-    <button class="color-btn" style="background: #00FFFF" data-color="#00FFFF"></button>
-  
+      <button class="color-btn" style="background: #222E50" data-color="#222E50" aria-label="Deep Navy"></button>
+      <button class="color-btn" style="background: #3A86FF" data-color="#3A86FF" aria-label="Vibrant Blue"></button>
+      <button class="color-btn" style="background: #8BD3DD" data-color="#8BD3DD" aria-label="Soft Teal"></button>
+      <button class="color-btn" style="background: #16A34A" data-color="#16A34A" aria-label="Green"></button>
+      <button class="color-btn" style="background: #2D6A4F" data-color="#2D6A4F" aria-label="Forest Green"></button>
+      <button class="color-btn" style="background: #FFD166" data-color="#FFD166" aria-label="Warm Yellow"></button>
+      <button class="color-btn" style="background: #FFB703" data-color="#FFB703" aria-label="Amber"></button>
+      <button class="color-btn" style="background: #FF6B6B" data-color="#FF6B6B" aria-label="Coral"></button>
+      <button class="color-btn" style="background: #F08A5D" data-color="#F08A5D" aria-label="Soft Orange"></button>
+      <button class="color-btn" style="background: #F7C6C7" data-color="#F7C6C7" aria-label="Light Pink"></button>
+      <button class="color-btn" style="background: #BC6FF1" data-color="#BC6FF1" aria-label="Lavender"></button>
+      <button class="color-btn" style="background: #7C4DFF" data-color="#7C4DFF" aria-label="Violet"></button>
+      <button class="color-btn" style="background: #6AA84F" data-color="#6AA84F" aria-label="Olive"></button>
+      <button class="color-btn" style="background: #EAEAEA" data-color="#EAEAEA" aria-label="Light Gray"></button>
+      <button class="color-btn" style="background: #5A5A5A" data-color="#5A5A5A" aria-label="Mid Gray"></button>
+      <button class="color-btn" style="background: #FFFFFF" data-color="#FFFFFF" aria-label="White"></button>
+    </div>
   </div>
-
-<h1></h1>
 <h1></h1>
   <script src="/socket.io/socket.io.js"></script>
   <script src="client.js"></script>
