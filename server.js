@@ -3,6 +3,11 @@ const http = require("http");
 const { Server } = require("socket.io");
 
 const app = express();
+
+// Se o app estiver atrás de um proxy (nginx, Cloudflare), habilite:
+// permite que express/Socket.IO confiem em X-Forwarded-For
+app.set("trust proxy", true);
+
 const server = http.createServer(app);
 const io = new Server(server);
 
@@ -15,7 +20,21 @@ let pixels = Array.from({ length: HEIGHT }, () =>
 );
 
 io.on("connection", (socket) => {
-  console.log("Novo usuário conectado:", socket.id);
+  // 1) IP direto via handshake (funciona na maioria dos casos)
+  const ipFromHandshake = socket.handshake.address;
+
+  // 2) Checar cabeçalho X-Forwarded-For (caso haja proxy)
+  // pode conter uma lista: "client, proxy1, proxy2"
+  const xff = socket.handshake.headers["x-forwarded-for"];
+  const ipFromXff = xff ? xff.split(",")[0].trim() : null;
+
+  // Escolhe prioridade: XFF (proxy-aware) > handshake.address
+  const clientIp = ipFromXff || ipFromHandshake;
+
+  console.log("Novo usuário conectado:", socket.id, "IP:", clientIp);
+
+  // (opcional) guardar em memória / BD
+  // connectedClients[socket.id] = { ip: clientIp, connectedAt: Date.now() }
 
   socket.emit("init", pixels);
 
@@ -25,8 +44,14 @@ io.on("connection", (socket) => {
       io.emit("updatePixel", { x, y, color });
     }
   });
+
+  socket.on("disconnect", (reason) => {
+    console.log("Desconectou:", socket.id, "IP:", clientIp, "motivo:", reason);
+    // (opcional) delete connectedClients[socket.id]
+  });
 });
 
-server.listen(3000, () => {
-  console.log("Servidor rodando em http://localhost:3000");
+const PORT = 5500;
+server.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

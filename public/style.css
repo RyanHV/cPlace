@@ -12,7 +12,16 @@ canvas {
 }
 
 #palette {
-  margin-top: 10px;
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  background: #1a1922;
+  padding: 10px;
+  border-radius: 10px;
+   box-shadow: 0 0 20px #030303;
 }
 
 .color-btn {
